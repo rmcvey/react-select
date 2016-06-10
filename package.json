@@ -5,6 +5,9 @@
   "main": "lib/Select.js",
   "style": "dist/react-select.min.css",
   "author": "Jed Watson",
+  "contributors": [
+    "Rob McVey"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",

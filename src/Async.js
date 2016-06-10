@@ -51,8 +51,10 @@ const Async = React.createClass({
 		loadingPlaceholder: React.PropTypes.string,     // replaces the placeholder while options are loading
 		minimumInput: React.PropTypes.number,           // the minimum number of characters that trigger loadOptions
 		noResultsText: stringOrNode,                    // placeholder displayed when there are no matching search results (shared with Select)
+		onFocus: React.PropTypes.func,					// onFocus handler: function (event) {}
 		onInputChange: React.PropTypes.func,            // onInputChange handler: function (inputValue) {}
 		placeholder: stringOrNode,                      // field placeholder, displayed when there's no value (shared with Select)
+		resetOnFocus: React.PropTypes.bool,				// resetOnFocus controls whether options are reset when user focuses input
 		searchPromptText: stringOrNode,       // label to prompt for search input
 		searchingText: React.PropTypes.string,          // message to display while options are loading
 	},
@@ -63,6 +65,7 @@ const Async = React.createClass({
 			ignoreCase: true,
 			loadingPlaceholder: 'Loading...',
 			minimumInput: 0,
+			resetOnFocus: false,
 			searchingText: 'Searching...',
 			searchPromptText: 'Type to search',
 		};
@@ -140,6 +143,15 @@ const Async = React.createClass({
 			return input;
 		}) : input;
 	},
+	onFocus () {
+		// reset options on focus
+		if (this.props.resetOnFocus) {
+			this.setState({ options: [] });
+		}
+		if (typeof this.props.onFocus === 'function') {
+			this.props.onFocus(...arguments);
+		}
+	},
 	render () {
 		let { noResultsText } = this.props;
 		let { isLoading, options } = this.state;
@@ -155,6 +167,7 @@ const Async = React.createClass({
 				{...this.props}
 				ref="select"
 				isLoading={isLoading}
+				onFocus={this.onFocus.bind(this)}
 				noResultsText={noResultsText}
 				onInputChange={this.loadOptions}
 				options={options}
