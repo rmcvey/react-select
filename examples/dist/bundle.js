@@ -1422,7 +1422,7 @@ var Select = _react2['default'].createClass({
 		});
 
 		var removeMessage = null;
-		if (this.props.multi && !this.props.disabled && valueArray.length && !this.state.inputValue && this.state.isFocused) {
+		if (this.props.multi && !this.props.disabled && valueArray.length && !this.state.inputValue && this.props.backspaceRemoves !== false && this.state.isFocused) {
 			removeMessage = _react2['default'].createElement(
 				'span',
 				{ id: this._instancePrefix + '-backspace-remove-message', className: 'Select-aria-only', 'aria-live': 'assertive' },
